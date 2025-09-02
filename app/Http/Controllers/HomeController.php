@@ -13,5 +13,13 @@ class HomeController extends Controller
     {
         return view('home')->with('pageData', $this->getPageData());
     }
-    //
+
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'textarea'=>'required'
+        ]);
+
+    }
 }
