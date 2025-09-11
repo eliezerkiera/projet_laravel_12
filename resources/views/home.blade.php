@@ -2,17 +2,20 @@
 
 
 @section('content')
-<div class="text-center mt-10">
-    <h2 class="text-3xl font-bold mb-4">Bienvenue sur mon site 🚀</h2>
+<x-form.form method='post' action="/index.php">
+<x-form.textarea name='textarea' label="le label du textarea"></x-form.textarea>
 
-        <div x-data="{ open: false }" class="p-4">
-    <button @click="open = !open" class="bg-blue-500 text-white px-4 py-2 rounded">
-        Toggle Message
-    </button>
 
-    <div x-show="open" class="mt-4 text-green-600">
-        Bonjour 👋 Je suis visible !
-    </div>
-</div>
-</div>
+<x-form.select name="select" label="label du select" :options="$options"/>
+
+
+<x-form.checkbox name="checkbox" label="label du checkbox"/>
+
+<x-form.input type="text" name="text" label="label du text" default-value="dkdkdkdkdkdkdkd"/>
+<x-form.input type="password" name="password" label="label du password"/>
+<x-form.submit>envoyer</x-form.submit>
+
+</x-form.form>
+
+
 @endsection
