@@ -1,7 +1,7 @@
 @if (!$isWired)
     @if (!empty($errors->all()))
         @php $errorList = $errors->get($name) @endphp
-        <div {!! $attributes->merge(['class' => 'text-red-500 text-xs italic']) !!}>
+        <div {!! $attributes->merge(['class' => 'mt-1 text-error text-sm']) !!}>
             @if (is_array($errorList))
                 <ul>
                     @foreach ($errorList as $error)
@@ -15,7 +15,7 @@
     @endif
 @else
     @error($name)
-        <div {!! $attributes->merge(['class' => 'text-red-500 text-xs italic']) !!}>
+        <div {!! $attributes->merge(['class' => 'mt-1 text-error text-sm']) !!}>
             {{ $message }}
         </div>
     @enderror
