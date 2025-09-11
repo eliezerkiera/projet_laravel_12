@@ -6,12 +6,16 @@
 <x-form.textarea name='textarea' label="le label du textarea"></x-form.textarea>
 
 
- <button type="submit"
-                    class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">
-                S’inscrire
-            </button>
-</x-form.form>
+<x-form.select name="select" label="label du select" :options="$options"/>
 
+
+<x-form.checkbox name="checkbox" label="label du checkbox"/>
+
+<x-form.input type="text" name="text" label="label du text" default-value="dkdkdkdkdkdkdkd"/>
+<x-form.input type="password" name="password" label="label du password"/>
+<x-form.submit>envoyer</x-form.submit>
+
+</x-form.form>
 
 
 @endsection
