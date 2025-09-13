@@ -1,3 +1,57 @@
-<div>
-    <!-- It is not the man who has too little, but the man who craves more, that is poor. - Seneca -->
-</div>
+@extends('layouts.auth')
+@section('title', __('auth.edit-profile-page-title'))
+
+@section('content')
+ <div class="max-w-xl mx-auto py-10 card p-6 shadow space-y-6">
+
+        <h2 class="text-2xl font-bold mb-4">{{ __('Profile Information') }}</h2>
+       @if(session('status') === 'profile-information-updated')
+            <div class="alert alert-success">{{ __('Profile updated successfully.') }}</div>
+        @endif
+
+        @if(session('status') === 'password-updated')
+            <div class="alert alert-success">{{ __('Password updated successfully.') }}</div>
+        @endif
+
+        @if(session('status') === 'profile-information-updated-email-verification')
+    <div class="alert alert-info">
+        {{ __('Your profile has been updated. Please verify your new email address before continuing.') }}
+    </div>
+@endif
+
+        @if(session('status') === 'profile-updated')
+            <div class="alert alert-success">{{ __('Profile updated successfully.') }}</div>
+        @elseif(session('status') === 'verification-link-sent')
+            <div class="alert alert-success">{{ __('A new verification link has been sent to your email address.') }}</div>
+        @endif
+
+        <x-form.form method="PUT" action="{{ route('user-profile-information.update') }}">
+
+
+        @bind($user)
+            <x-form.input name="first_name" type="text" default-value="@field('first_name')" label="{{ __('First name') }}"/>
+            <x-form.input name="last_name" type="text" default-value="@field('last_name')" label="{{ __('Last name') }}"/>
+            <x-form.input name="email" type="email" default-value="@field('email')" label="{{ __('Email') }}"/>
+             <x-form.select name="country_id" default-value="@field('country_id')" :options="$countrySelect"/>
+            <x-form.input type="hidden" name="language_id" default-value="@field('language_id')"/>
+            <x-form.submit>{{ __('Save')}}</x-form.submit>
+        @endbind
+        </x-form.form>
+
+
+         {{-- Change Password --}}
+    <div class="mt-8">
+        <a href="{{ route('user-password.edit') }}" class="btn btn-outline btn-warning">
+            {{ __('Change Password') }}
+        </a>
+    </div>
+
+    {{-- Delete Account --}}
+    <div class="mt-8">
+        <x-form.form method="DELETE" action="{{ route('user.delete') }}">
+            <x-form.submit>{{ __('Delete Account')}}</x-form.submit>
+        </x-form.form>
+    </div>
+
+    </div>
+@endsection

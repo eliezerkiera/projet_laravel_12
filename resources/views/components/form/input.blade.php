@@ -37,6 +37,10 @@
 
 
 
+@elseif ($type=="hidden")
+
+<input type="hidden" name="{{ $name }}" value="{{ $value }}"/>
+
 @else
 <div class="form-control">
     <x-form.label :label="$label" :for="$id" class="block"/>

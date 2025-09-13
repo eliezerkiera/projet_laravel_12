@@ -17,5 +17,6 @@
 
 </x-form.form>
 
+<x-form.form method="put">fjfjfjfjfjfjfj</x-form.form>
 
 @endsection
