@@ -18,8 +18,8 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update(User $user, array $input): void
     {
         Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
-
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'string',
@@ -27,17 +27,29 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
                 'max:255',
                 Rule::unique('users')->ignore($user->id),
             ],
+            'country_id' => ['nullable', 'exists:countries,id'],
+            'language_id' => ['nullable', 'exists:languages,id'],
         ])->validateWithBag('updateProfileInformation');
 
         if ($input['email'] !== $user->email &&
             $user instanceof MustVerifyEmail) {
             $this->updateVerifiedUser($user, $input);
+
+
         } else {
             $user->forceFill([
-                'name' => $input['name'],
+                'first_name' => $input['first_name'],
+                'last_name' => $input['last_name'],
                 'email' => $input['email'],
+                'country_id' => $input['country_id'] ?? null,
+                'language_id' => $input['language_id'] ?? null,
             ])->save();
         }
+
+
+         // Redirection avec message
+        redirect()->route('user-profile.edit')->with('status', 'profile-information-updated');
+
     }
 
     /**
@@ -48,11 +60,18 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     protected function updateVerifiedUser(User $user, array $input): void
     {
         $user->forceFill([
-            'name' => $input['name'],
-            'email' => $input['email'],
+             'first_name' => $input['first_name'],
+                'last_name' => $input['last_name'],
+                'email' => $input['email'],
+                'country_id' => $input['country_id'] ?? null,
+                'language_id' => $input['language_id'] ?? null,
             'email_verified_at' => null,
         ])->save();
 
         $user->sendEmailVerificationNotification();
+
+         // Redirection avec message
+        redirect()->route('user-profile.edit')->with('status', 'profile-information-updated-email-verification');
+
     }
 }

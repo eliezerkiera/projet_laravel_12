@@ -16,10 +16,10 @@ use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 
 
-use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponstContract;
-use App\Http\Responses\RegisterResponse;
-use Laravel\Fortify\Contracts\PasswordUpdateResponse as PasswordUpdateResponseContract;
-use App\Http\Responses\PasswordUpdateResponse;
+//use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponstContract;
+//use App\Http\Responses\RegisterResponse;
+//use Laravel\Fortify\Contracts\PasswordUpdateResponse as PasswordUpdateResponseContract;
+//use App\Http\Responses\PasswordUpdateResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -44,7 +44,7 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::registerView(function () {
-            return view('auth.register')->with('pageData',$this->getPageData());
+            return view('auth.register',['countrySelect'=>$this->getCountrySelect()])->with('pageData',$this->getPageData());
         });
 
         Fortify::requestPasswordResetLinkView(function () {
@@ -82,7 +82,7 @@ class FortifyServiceProvider extends ServiceProvider
 
 
 
-         $this->app->singleton(RegisterResponstContract::class, RegisterResponse::class);
-        $this->app->singleton(PasswordUpdateResponseContract::class, PasswordUpdateResponse::class);
+        // $this->app->singleton(RegisterResponstContract::class, RegisterResponse::class);
+       // $this->app->singleton(PasswordUpdateResponseContract::class, PasswordUpdateResponse::class);
     }
 }

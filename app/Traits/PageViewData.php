@@ -64,8 +64,23 @@ trait PageViewData
     }
 
 
-    public function PageViewWithData($view=null, $data=[], $mergeData=[])
+    public function pageViewWithData($view=null, $data=[], $mergeData=[])
     {
         return view($view, $data, $mergeData)->with('pageData',$this->getPageData());
+    }
+
+
+    public function getCountrySelect()
+    {
+        $list=Country::select()->orderBy('code','asc')->get();
+        $return=[];
+
+		//$return['']=__('please select');
+        foreach($list as $element)
+        {
+            $return[$element->id]=$element->full_name;
+        }
+
+        return $return;
     }
 }
