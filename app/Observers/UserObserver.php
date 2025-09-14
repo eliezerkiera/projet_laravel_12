@@ -14,13 +14,33 @@ class UserObserver
      */
     public function created(User $user): void
     {
-        $name=$user->first_name;
-        if(!empty($user->last_name))
-        {
-            $name.=" ".$user->last_name;
-        }
-        $save=Storage::disk('public')->path(User::AVATAR_PATH."/".$user->id.".png");
-        Avatar::create($name)->save($save);
+
+         // Générer l'avatar à partir des initiales du nom + prénom
+        $initials = $this->getInitials($user);
+
+        $avatar = Avatar::create($initials)
+            ->background('#0ea5e9')
+            ->color('#ffffff')
+            ->size(100)
+            ->rounded()
+            ->getImageObject()
+            ->encode('png');
+
+        //$filename = 'avatars/' . $user->id . '.png';
+        $filename=User::AVATAR_PATH."/".$user->id.".png";
+        Storage::disk('public')->put($filename, (string) $avatar);
+
+        $user->avatar = $filename;
+        $user->save();
+
+
+        // $name=$user->first_name;
+        // if(!empty($user->last_name))
+        // {
+        //     $name.=" ".$user->last_name;
+        // }
+        // $save=Storage::disk('public')->path(User::AVATAR_PATH."/".$user->id.".png");
+        // Avatar::create($name)->save($save);
     }
 
 
@@ -34,13 +54,32 @@ class UserObserver
                 Storage::disk('public')->delete($av);
             }
 
-            $name=$user->first_name;
-            if(!empty($user->last_name))
-            {
-                $name.=" ".$user->last_name;
-            }
-            $save=Storage::disk('public')->path(User::AVATAR_PATH."/".$user->id.".png");
-            Avatar::create($name)->save($save);
+
+              // Générer l'avatar à partir des initiales du nom + prénom
+                $initials = $this->getInitials($user);
+
+                $avatar = Avatar::create($initials)
+                    ->background('#0ea5e9')
+                    ->color('#ffffff')
+                    ->size(100)
+                    ->rounded()
+                    ->getImageObject()
+                    ->encode('png');
+
+                //$filename = 'avatars/' . $user->id . '.png';
+                $filename=User::AVATAR_PATH."/".$user->id.".png";
+                Storage::disk('public')->put($filename, (string) $avatar);
+
+                $user->avatar = $filename;
+                $user->save();
+
+            // $name=$user->first_name;
+            // if(!empty($user->last_name))
+            // {
+            //     $name.=" ".$user->last_name;
+            // }
+            // $save=Storage::disk('public')->path(User::AVATAR_PATH."/".$user->id.".png");
+            // Avatar::create($name)->save($save);
             }
     }
 
@@ -79,5 +118,18 @@ class UserObserver
     public function forceDeleted(User $user): void
     {
         //
+    }
+
+
+    /**
+     * Récupère les initiales du prénom/nom
+     */
+    protected function getInitials(User $user): string
+    {
+        $lastInitial = $user->last_name ? mb_substr($user->last_name, 0, 1) : '';
+        $firstInitial = $user->first_name ? mb_substr($user->first_name, 0, 1) : '';
+
+        // On met en majuscule et on concatène (nom + prénom)
+        return mb_strtoupper(trim($lastInitial . $firstInitial));
     }
 }

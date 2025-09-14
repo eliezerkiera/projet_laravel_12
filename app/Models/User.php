@@ -55,8 +55,6 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
 
-
-
      public const AVATAR_PATH ='user/avatar';
 
     public function country()
