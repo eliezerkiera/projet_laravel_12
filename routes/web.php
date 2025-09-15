@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::post('/',[HomeController::class, 'store']);
+Route::get('/logout', [UserController::class, 'logout']);
 
 Route::middleware(['auth'])->controller(UserController::class)->group(function () {
     // Formulaire modification profil

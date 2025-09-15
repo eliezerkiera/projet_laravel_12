@@ -28,14 +28,13 @@
         <x-form.form method="PUT" action="{{ route('user-profile-information.update') }}">
 
 
-        @bind($user)
-            <x-form.input name="first_name" type="text" default-value="@field('first_name')" label="{{ __('First name') }}"/>
-            <x-form.input name="last_name" type="text" default-value="@field('last_name')" label="{{ __('Last name') }}"/>
-            <x-form.input name="email" type="email" default-value="@field('email')" label="{{ __('Email') }}"/>
-             <x-form.select name="country_id" default-value="@field('country_id')" :options="$countrySelect"/>
-            <x-form.input type="hidden" name="language_id" default-value="@field('language_id')"/>
+            <x-form.input name="first_name" type="text" :default-value="$user->first_name" label="{{ __('First name') }}"/>
+            <x-form.input name="last_name" type="text" :default-value="$user->last_name" label="{{ __('Last name') }}"/>
+            <x-form.input name="email" type="email" :default-value="$user->email" label="{{ __('Email') }}"/>
+             <x-form.select name="country_id" :default-value="$user->country_id" :options="$countrySelect"/>
+            <x-form.input type="hidden" name="language_id" :default-value="$user->language_id"/>
             <x-form.submit>{{ __('Save')}}</x-form.submit>
-        @endbind
+
         </x-form.form>
 
 

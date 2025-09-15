@@ -18,20 +18,22 @@ class UserObserver
          // Générer l'avatar à partir des initiales du nom + prénom
         $initials = $this->getInitials($user);
 
-        $avatar = Avatar::create($initials)
-            ->background('#0ea5e9')
-            ->color('#ffffff')
-            ->size(100)
-            ->rounded()
-            ->getImageObject()
-            ->encode('png');
+        // $avatar = Avatar::create($initials)
+        //     ->background('#0ea5e9')
+        //     ->color('#ffffff')
+        //     ->size(100)
+        //     ->rounded()
+        //     ->getImageObject()
+        //     ->encode('png');
 
         //$filename = 'avatars/' . $user->id . '.png';
-        $filename=User::AVATAR_PATH."/".$user->id.".png";
-        Storage::disk('public')->put($filename, (string) $avatar);
+        //$filename=User::AVATAR_PATH."/".$user->id.".png";
+        $save=Storage::disk('public')->path(User::AVATAR_PATH."/".$user->id.".png");
+        Avatar::create($initials)->save($save);
+        //Storage::disk('public')->put($filename, (string) $avatar);
 
-        $user->avatar = $filename;
-        $user->save();
+       // $user->avatar = $filename;
+       //$user->save();
 
 
         // $name=$user->first_name;
@@ -58,20 +60,8 @@ class UserObserver
               // Générer l'avatar à partir des initiales du nom + prénom
                 $initials = $this->getInitials($user);
 
-                $avatar = Avatar::create($initials)
-                    ->background('#0ea5e9')
-                    ->color('#ffffff')
-                    ->size(100)
-                    ->rounded()
-                    ->getImageObject()
-                    ->encode('png');
-
-                //$filename = 'avatars/' . $user->id . '.png';
-                $filename=User::AVATAR_PATH."/".$user->id.".png";
-                Storage::disk('public')->put($filename, (string) $avatar);
-
-                $user->avatar = $filename;
-                $user->save();
+               $save=Storage::disk('public')->path(User::AVATAR_PATH."/".$user->id.".png");
+        Avatar::create($initials)->save($save);
 
             // $name=$user->first_name;
             // if(!empty($user->last_name))

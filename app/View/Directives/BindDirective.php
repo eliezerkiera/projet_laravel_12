@@ -19,7 +19,7 @@ class BindDirective
         });
 
         // Directive pour remplir les champs
-        Blade::directive('field', function ($expression) {
+        Blade::directive('field', function ($expression) {dd($expression);
             return "<?php echo e(old({$expression}, \$__bindData->{$expression} ?? '')); ?>";
         });
     }

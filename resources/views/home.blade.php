@@ -2,6 +2,13 @@
 
 
 @section('content')
+
+@auth
+    connecté
+@endauth
+@guest
+    non connecté
+@endguest
 <x-form.form method='post' action="/index.php">
 <x-form.textarea name='textarea' label="le label du textarea"></x-form.textarea>
 

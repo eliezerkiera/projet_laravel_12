@@ -16,7 +16,7 @@ class UserController extends Controller
     public function profileEdit()
     {
 
-        return view('profile.edit-profile',['user'=>Auth::user()])->with('pageData',$this->getPageData());
+        return view('profile.edit-profile',['user'=>Auth::user(),'countrySelect'=>$this->getCountrySelect()])->with('pageData',$this->getPageData());
     }
 
     public function passwordEdit()
@@ -34,13 +34,6 @@ class UserController extends Controller
 
         $user = $request->user();
 
-        $validated = $request->validate([
-            'password' => ['required'],
-        ]);
-
-        if (!Hash::check($validated['password'], $user->password)) {
-            return back()->withErrors(['password' => __('The password is incorrect.')]);
-        }
 
         Auth::logout();
 
@@ -100,4 +93,20 @@ class UserController extends Controller
 
         return back()->with('status', $emailChanged ? 'verification-link-sent' : 'profile-updated');
     }
+
+
+
+public function logout(Request $request)
+{
+    Auth::logout(); // Déconnecte l'utilisateur actuel
+
+    // Optionnel : invalide la session pour plus de sécurité
+    $request->session()->invalidate();
+
+    // Régénère le token CSRF
+    $request->session()->regenerateToken();
+
+    // Redirection après déconnexion
+    return redirect('/'); // ou route('login')
+}
 }

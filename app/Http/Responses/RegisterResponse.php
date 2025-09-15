@@ -23,10 +23,7 @@ class RegisterResponse implements RegisterResponseContract
         }
         else
         {
-            if(Session::get('status')=='user-created')
-            {
-                return redirect()->route('home')->with('status','user-created');
-            }
+            return redirect()->route('verification.notice');
 
         }
         return  redirect()->intended(Fortify::redirects('register'));

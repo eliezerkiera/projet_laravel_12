@@ -15,9 +15,12 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 
+use Illuminate\Validation\ValidationException;
 
-//use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponstContract;
-//use App\Http\Responses\RegisterResponse;
+
+
+use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponstContract;
+use App\Http\Responses\RegisterResponse;
 //use Laravel\Fortify\Contracts\PasswordUpdateResponse as PasswordUpdateResponseContract;
 //use App\Http\Responses\PasswordUpdateResponse;
 
@@ -68,6 +71,22 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
+        Fortify::authenticateUsing(function ($request) {
+                $user = \App\Models\User::where('email', $request->email)->first();
+
+                if ($user &&
+                    \Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
+
+                    if (!$user->hasVerifiedEmail()) {
+                        throw ValidationException::withMessages([
+                            Fortify::username() => __('You need to verify your email before logging in.'),
+                        ]);
+                    }
+
+                    return $user;
+                }
+            });
+
 
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
@@ -82,7 +101,7 @@ class FortifyServiceProvider extends ServiceProvider
 
 
 
-        // $this->app->singleton(RegisterResponstContract::class, RegisterResponse::class);
+         $this->app->singleton(RegisterResponstContract::class, RegisterResponse::class);
        // $this->app->singleton(PasswordUpdateResponseContract::class, PasswordUpdateResponse::class);
     }
 }
