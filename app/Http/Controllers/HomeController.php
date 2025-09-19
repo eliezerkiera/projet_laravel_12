@@ -11,42 +11,47 @@ class HomeController extends Controller
 
     public function index()
     {
-      $options = [
-    [
-        'value' => 'Assistance',
-        'children' => [
-            'info' => "Demande d'information",
-            'support' => "Support technique",
-            'bug' => "Signaler un bug"
-        ]
-    ],
-    [
-        'value' => 'Autre',
-        'children' => [
-            'autre' => "Autre sujet",
-            'suggestion' => "Suggestion",
-            'feedback' => "Retour d'expérience"
-        ]
-    ]
-];
-
-$options2=['1'=>'label 1', '2'=>'label 2'];
-        return view('home')->with(['pageData'=>$this->getPageData(), 'options'=>$options2]);
+        return view('home.index')->with('pageData', $this->getPageData());
     }
 
 
-    public function store(Request $request)
+    public function home()
+    {
+         return view('home.home')->with('pageData', $this->getPageData());
+       
+    }
+
+    public function about()
+    {
+        return view('home.about')->with('pageData', $this->getPageData());
+
+    }
+
+    public function termOfUse()
+    {
+        return view('home.term-of-use')->with('pageData', $this->getPageData());
+
+    }
+
+
+    public function contact()
+    {
+        return view('home.contact')->with('pageData', $this->getPageData());
+
+    }
+
+
+    public function changeLanguage()
     {
 
-        $validatedData = $request->validate([
-            'textarea'=>'required|min:2',
-            'select'=>'required',
-            'checkbox'=>'required',
-            'text'=>'required',
-            'password'=>'required'
-        ]);
-
-
-         return "Formulaire valide : " . json_encode($validatedData);
     }
+
+
+    public function changeCountry()
+    {
+
+    }
+
+
+
 }

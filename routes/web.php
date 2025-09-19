@@ -5,10 +5,10 @@ use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+//Route::get('/', [HomeController::class, 'index'])->name('home');
 
-Route::post('/',[HomeController::class, 'store']);
-Route::get('/logout', [UserController::class, 'logout']);
+//Route::post('/',[HomeController::class, 'store']);
+//Route::get('/logout', [UserController::class, 'logout']);
 
 Route::middleware(['auth'])->controller(UserController::class)->group(function () {
     // Formulaire modification profil
@@ -31,3 +31,14 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
 
 return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
+
+
+Route::controller(HomeController::class)->group(function () {
+    Route::get('/','index')->name('index');
+    Route::get('/home','home')->name('home')->middleware(['verified']);
+    Route::get('/about','about')->name('home.about');
+    Route::get('/term-of-use','termOfUse')->name('home.term-of-use');
+    Route::get('/contact','contact')->name('home.contact');
+    Route::get('/change-language/{language:code}', 'changeLanguage')->name('language.change');
+    Route::get('/change-country/{country:code}', 'changeCountry')->name('country.change');
+});
