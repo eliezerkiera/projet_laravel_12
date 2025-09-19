@@ -28,13 +28,16 @@ class Checkbox extends Component
     public string|int|null  $value;
     public bool $isChecked;
 
+    public string|null|array $inputNote;
+
     public function __construct(
         string $name,
         string $label = '',
         bool $isWired = false,
         bool $showErrors = true,
         string|int|null $defaultValue = null,
-        string |int $value = 1
+        string |int $value = 1,
+         string|null|array $inputNote = null
     )
     {
         $this->name = $name;
@@ -42,6 +45,7 @@ class Checkbox extends Component
         $this->isWired = $isWired;
         $this->showErrors = $showErrors;
         $this->defaultValue = $defaultValue;
+         $this->inputNote = $inputNote;
 
         $this->id = $this->generateId('checkbox');
         $this->value = $value;

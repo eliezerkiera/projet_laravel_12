@@ -22,6 +22,8 @@ class Textarea extends Component
     public bool $showErrors;
 
     public string|int|null  $value;
+
+    public string|null|array $inputNote;
     /**
      * Create a new component instance.
      */
@@ -30,7 +32,8 @@ class Textarea extends Component
         string $label = '',
         bool $isWired = false,
         bool $showErrors = true,
-        string|int|null $defaultValue = null
+        string|int|null $defaultValue = null,
+        string|null|array $inputNote = null
     )
     {
         $this->name = $name;
@@ -38,6 +41,7 @@ class Textarea extends Component
         $this->isWired = $isWired;
         $this->showErrors = $showErrors;
         $this->defaultValue = $defaultValue;
+        $this->inputNote = $inputNote;
 
         $this->id = $this->generateId('textarea');
         $this->value = $this->getValue();

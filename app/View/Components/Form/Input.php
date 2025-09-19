@@ -23,6 +23,9 @@ class Input extends Component
     public bool $showErrors;
 
     public string|int|null  $value;
+
+        public string|null|array $inputNote;
+
     /**
      * Create a new component instance.
      */
@@ -32,7 +35,8 @@ class Input extends Component
         string $type = 'text',
         bool $isWired = false,
         bool $showErrors = true,
-        string|int|null $defaultValue = null
+        string|int|null $defaultValue = null,
+         string|null|array $inputNote = null
     )
     {
         $this->name = $name;
@@ -41,6 +45,7 @@ class Input extends Component
         $this->isWired = $isWired;
         $this->showErrors = $showErrors;
         $this->defaultValue = $defaultValue;
+         $this->inputNote = $inputNote;
 
         $this->id = $this->generateId($this->type);
         $this->value = $this->getValue();

@@ -25,6 +25,9 @@ class Select extends Component
 
      public string $id;
 
+         public string|null|array $inputNote;
+
+
     /**
      * default [$key1=>$value1, $key2=>$value2]
      *
@@ -61,7 +64,8 @@ class Select extends Component
         bool $showErrors = true,
         array $options = [],
         string | int $defaultValue = '',
-        string $placeholder = ''
+        string $placeholder = '',
+         string|null|array $inputNote = null
     )
     {
         $this->name = $name;
@@ -71,6 +75,7 @@ class Select extends Component
         $this->options = $options;
         $this->defaultValue = $defaultValue;
         $this->placeholder = (empty($placeholder))? __('Please select'):$placeholder;
+         $this->inputNote = $inputNote;
 
 
 
