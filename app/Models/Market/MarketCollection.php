@@ -4,9 +4,13 @@ namespace App\Models\Market;
 
 use App\Models\Country;
 use App\Models\User;
+use App\Policies\MarketCollectionPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+
+#[UsePolicy(MarketCollectionPolicy::class)]
 class MarketCollection extends Model
 {
      use HasFactory;

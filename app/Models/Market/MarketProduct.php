@@ -5,9 +5,12 @@ namespace App\Models\Market;
 use App\Models\Country;
 use App\Models\Currency;
 use App\Models\User;
+use App\Policies\MarketProductPolicy;
+use Illuminate\Database\Eloquent\Attributes\UsePolicy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+#[UsePolicy(MarketProductPolicy::class)]
 class MarketProduct extends Model
 {
     use HasFactory;
