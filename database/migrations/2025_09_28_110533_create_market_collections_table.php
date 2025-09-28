@@ -31,8 +31,8 @@ return new class extends Migration
             $table->string('cover_image')->nullable();
 
             // Market relations
-            $table->foreignId('market_type_id')->constrained('market_types');
-            $table->foreignId('market_category_id')->constrained('market_categories');
+            $table->foreignId('market_collection_type_id')->constrained('market_collection_types');
+            $table->foreignId('market_collection_category_id')->constrained('market_collection_categories');
 
             // SEO & management
             $table->string('slug')->unique();

@@ -32,9 +32,9 @@ return new class extends Migration
             $table->unsignedTinyInteger('condition_percentage')->nullable(); // product condition in %
 
             // Market relations
-            $table->foreignId('market_type_id')->constrained('market_types');
-            $table->foreignId('market_category_id')->constrained('market_categories');
-            $table->foreignId('market_payment_method_id')->constrained('market_payment_methods');
+            $table->foreignId('market_product_type_id')->constrained('market_product_types');
+            $table->foreignId('market_product_category_id')->constrained('market_product_categories');
+            $table->foreignId('market_product_payment_method_id')->constrained('market_product_payment_methods');
             $table->foreignId('currency_id')->constrained('currencies');
 
             // SEO & management

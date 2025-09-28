@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
- use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Market\MarketCollection;
+use App\Models\Market\MarketProduct;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 
 use App\Observers\UserObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
@@ -72,4 +74,17 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return Storage::disk('public')->url(self::AVATAR_PATH."/".$this->id.".png");
     }
+
+
+    // Collections suivies
+public function followedCollections()
+{
+    return $this->belongsToMany(MarketCollection::class, 'market_collection_user', 'user_id', 'market_collection_id')->withTimestamps();
+}
+
+// Produits enregistrés
+public function savedProducts()
+{
+    return $this->belongsToMany(MarketProduct::class, 'market_product_user', 'user_id', 'market_product_id')->withTimestamps();
+}
 }
